@@ -61,3 +61,5 @@ crashlytics-build.properties
 .vscode/
 Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
 Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset.meta
+
+Application/
