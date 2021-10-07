@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Zenject;
+using Input;
+using UniRx;
 
 namespace Player
 {
@@ -11,6 +14,17 @@ namespace Player
     [RequireComponent(typeof(PhotonView))]
     public class Player : MonoBehaviour
     {
+        /// <summary>
+        /// 入力イベント
+        /// </summary>
+        [Inject]
+        private IInputEvent inputEvent = null;
+
+        /// <summary>
+        /// 初期化が完了しているか？
+        /// </summary>
+        private bool bInitialized = false;
+
         /// <summary>
         /// 移動ベクトル
         /// </summary>
@@ -34,10 +48,20 @@ namespace Player
 
         void Update()
         {
-            if (!photonView.IsMine) { return; }
+            if (bInitialized) { return; }
 
-            moveVec.x = UnityEngine.Input.GetAxisRaw("Horizontal");
-            moveVec.y = UnityEngine.Input.GetAxisRaw("Vertical");
+            if (inputEvent != null)
+            {
+                inputEvent.OnMove
+                          .Subscribe(vec =>
+                          {
+                              if (photonView.IsMine)
+                              {
+                                  moveVec = vec;
+                              }
+                          }).AddTo(gameObject);
+                bInitialized = true;
+            }
         }
 
         void FixedUpdate()
