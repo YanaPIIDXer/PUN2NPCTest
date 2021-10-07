@@ -33,7 +33,10 @@ namespace Sequence
                            {
                                await Pun2TaskNetwork.ConnectUsingSettingsAsync(token);
                                Debug.Log("Connect OK");
-                               await Pun2TaskNetwork.JoinOrCreateRoomAsync("TestRoom", new RoomOptions(), TypedLobby.Default, null, token);
+                               await Pun2TaskNetwork.JoinOrCreateRoomAsync("TestRoom", new RoomOptions()
+                               {
+                                   CleanupCacheOnLeave = false
+                               }, TypedLobby.Default, null, token);
                                Debug.Log("Room Join OK");
                                PhotonNetwork.LoadLevel("Game");
                            }
