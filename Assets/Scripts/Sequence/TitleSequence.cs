@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using Pun2Task;
 using System;
 using Photon.Realtime;
+using Photon.Pun;
 
 namespace Sequence
 {
@@ -34,6 +35,7 @@ namespace Sequence
                                Debug.Log("Connect OK");
                                await Pun2TaskNetwork.JoinOrCreateRoomAsync("TestRoom", new RoomOptions(), TypedLobby.Default, null, token);
                                Debug.Log("Room Join OK");
+                               PhotonNetwork.LoadLevel("Game");
                            }
                            catch (Exception e)
                            {
