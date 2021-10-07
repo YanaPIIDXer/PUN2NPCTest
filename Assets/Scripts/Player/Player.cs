@@ -17,13 +17,7 @@ namespace Player
         /// <summary>
         /// 入力イベント
         /// </summary>
-        [Inject]
         private IInputEvent inputEvent = null;
-
-        /// <summary>
-        /// 初期化が完了しているか？
-        /// </summary>
-        private bool bInitialized = false;
 
         /// <summary>
         /// 移動ベクトル
@@ -46,22 +40,21 @@ namespace Player
             photonView = GetComponent<PhotonView>();
         }
 
-        void Update()
+        /// <summary>
+        /// InputEventの注入
+        /// </summary>
+        /// <param name="inputEvent">InputEventインタフェース</param>
+        [Inject]
+        public void InjectInputEvent(IInputEvent inputEvent)
         {
-            if (bInitialized) { return; }
-
-            if (inputEvent != null)
-            {
-                inputEvent.OnMove
-                          .Subscribe(vec =>
+            inputEvent.OnMove
+                      .Subscribe(vec =>
+                      {
+                          if (photonView.IsMine)
                           {
-                              if (photonView.IsMine)
-                              {
-                                  moveVec = vec;
-                              }
-                          }).AddTo(gameObject);
-                bInitialized = true;
-            }
+                              moveVec = vec;
+                          }
+                      }).AddTo(gameObject);
         }
 
         void FixedUpdate()
