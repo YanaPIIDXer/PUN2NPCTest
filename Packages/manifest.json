@@ -2,6 +2,7 @@
   "dependencies": {
     "com.torisoup.pun2task": "https://github.com/TORISOUP/Pun2Task.git?path=Assets/Plugins/Pun2Task",
     "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
+    "com.svermeulen.extenject": "https://github.com/starikcetin/Extenject.git#9.1.0",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.3",
