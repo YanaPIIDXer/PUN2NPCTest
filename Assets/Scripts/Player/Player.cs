@@ -36,8 +36,8 @@ namespace Player
         {
             if (!photonView.IsMine) { return; }
 
-            moveVec.x = Input.GetAxisRaw("Horizontal");
-            moveVec.y = Input.GetAxisRaw("Vertical");
+            moveVec.x = UnityEngine.Input.GetAxisRaw("Horizontal");
+            moveVec.y = UnityEngine.Input.GetAxisRaw("Vertical");
         }
 
         void FixedUpdate()
