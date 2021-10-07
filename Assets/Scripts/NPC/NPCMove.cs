@@ -45,7 +45,7 @@ namespace NPC
             if (moveTime >= 1.0f)
             {
                 currentPosition = transform.position;
-                nextPosition = currentPosition + new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f));
+                nextPosition = currentPosition + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f));
                 moveTime = 0.0f;
             }
 
