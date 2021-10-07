@@ -9,10 +9,10 @@ using UniRx;
 namespace Player
 {
     /// <summary>
-    /// プレイヤークラス
+    /// プレイヤー移動Component
     /// </summary>
     [RequireComponent(typeof(PhotonView))]
-    public class Player : MonoBehaviour
+    public class PlayerMove : MonoBehaviour
     {
         /// <summary>
         /// 入力イベント
