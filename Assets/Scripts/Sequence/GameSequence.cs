@@ -15,7 +15,10 @@ namespace Sequence
         /// </summary>
         private static string PlayerPrefabPath = "Prefabs/Player";
 
-        void Awake()
+        // ↓AwakeのタイミングだとZenAutoInjecterが上手く動作しない
+        //void Awake()
+        // ↓Startのタイミングで行う
+        void Start()
         {
             PhotonNetwork.Instantiate(PlayerPrefabPath, Vector3.zero, Quaternion.identity);
         }
