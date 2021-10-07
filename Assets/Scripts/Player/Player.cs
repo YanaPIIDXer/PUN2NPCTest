@@ -21,19 +21,29 @@ namespace Player
         /// </summary>
         private Rigidbody rigidBody = null;
 
+        /// <summary>
+        /// PhotonView
+        /// </summary>
+        private PhotonView photonView = null;
+
         void Awake()
         {
             rigidBody = GetComponent<Rigidbody>();
+            photonView = GetComponent<PhotonView>();
         }
 
         void Update()
         {
+            if (!photonView.IsMine) { return; }
+
             moveVec.x = Input.GetAxisRaw("Horizontal");
             moveVec.y = Input.GetAxisRaw("Vertical");
         }
 
         void FixedUpdate()
         {
+            if (!photonView.IsMine) { return; }
+
             rigidBody.velocity = new Vector3(moveVec.x, 0.0f, moveVec.y);
         }
     }
