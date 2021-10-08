@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Cysharp.Threading.Tasks;
+using Pun2Task;
+using Cysharp.Threading.Tasks.Linq;
 
 namespace Player
 {
@@ -12,28 +15,32 @@ namespace Player
     public class PlayerCleanUp : MonoBehaviour
     {
         /// <summary>
-        /// PhotonView
+        /// 所有者
+        /// ※OnPlayerLeftRoomが走るタイミングではPhotonView.Ownerは既に書き換えられているため、
+        /// 　あらかじめキャッシュしておく
         /// </summary>
-        private PhotonView photonView = null;
-
-        /// <summary>
-        /// 前の所有者
-        /// </summary>
-        private Photon.Realtime.Player prevOwner = null;
+        private Photon.Realtime.Player owner = null;
 
         void Start()
         {
-            photonView = GetComponent<PhotonView>();
-            prevOwner = photonView.Owner;
+            var photonView = GetComponent<PhotonView>();
+            owner = photonView.Owner;
+            Watch().Forget();
         }
 
-        void Update()
+        /// <summary>
+        /// 監視
+        /// </summary>
+        private async UniTaskVoid Watch()
         {
-            // 所有者が書き換わっていれば「元の所有者は切断した」と見做してオブジェクトを破棄する
-            if (photonView.Owner != prevOwner)
-            {
-                Destroy(gameObject);
-            }
+            await Pun2TaskCallback.OnPlayerLeftRoomAsyncEnumerable()
+                                  .ForEachAsync((player) =>
+                                  {
+                                      if (player == owner)
+                                      {
+                                          Destroy(gameObject);
+                                      }
+                                  }, this.GetCancellationTokenOnDestroy());
         }
     }
 }
